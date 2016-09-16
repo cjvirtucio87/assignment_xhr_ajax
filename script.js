@@ -79,34 +79,35 @@ var dollarSign = {
 
 
 // regular ajax
-var ajaxPromise = dollarSign.ajax({
-  method: 'POST',
-  url: "http://reqres.in/api/posts",
-  complete: function(xhr) {
-    console.log(xhr.responseText);
-  },
-  success: function() {
-    console.log('this is successful (this happens in the promise)');
-  },
-  error: function() {
-    console.log('this is an error');
-  },
-  headers: {
-  },
-  data: 'title=Foo&body=Bar&userId=1',
-  async: true
-});
+// var ajaxPromise = dollarSign.ajax({
+//   method: 'GET',
+//   url: "http://reqres.in/api/users",
+//   complete: function(xhr) {
+//     console.log(xhr.responseText);
+//   },
+//   success: function() {
+//     console.log('this is successful (this happens in the promise)');
+//   },
+//   error: function() {
+//     console.log('this is an error');
+//   },
+//   headers: {
+//   },
+//   data: '',
+//   async: true
+// });
 
-var ourResolve = function(data) {
-  console.log('this has been resolved (this is what the user passed in for after the promise is done)!');
-};
+// var ourResolve = function(data) {
+//   console.log('this has been resolved (this is what the user passed in for after the promise is done)!');
+//   console.log(data);
+// };
 
-var ourReject = function(data) {
-  console.log('this was rejected');
-};
+// var ourReject = function(data) {
+//   console.log('this was rejected');
+// };
 
 
-ajaxPromise.then(ourResolve, ourReject);
+// ajaxPromise.then(ourResolve, ourReject);
 
 // get helper
 // dollarSign.get(
@@ -123,3 +124,65 @@ ajaxPromise.then(ourResolve, ourReject);
 //   function() {
 //     console.log('from the post request');
 //   });
+
+//button ajax
+var button = document.getElementById('ajax-button');
+button.addEventListener('click', function(){
+ 
+ var ajaxPromise1 = dollarSign.ajax({
+  method: 'GET',
+  url: "http://reqres.in/api/users",
+  complete: function(xhr) {
+    console.log(xhr.responseText);
+  },
+  success: function() {
+    console.log('this is successful (this happens in the promise)');
+  },
+  error: function() {
+    console.log('this is an error');
+  },
+  headers: {
+  },
+  data: '',
+  async: true
+  });
+
+ var ajaxPromise2 = dollarSign.ajax({
+  method: 'GET',
+  url: "http://reqres.in/api/users",
+  complete: function(xhr) {
+    console.log(xhr.responseText);
+  },
+  success: function() {
+    console.log('this is successful (this happens in the promise)');
+  },
+  error: function() {
+    console.log('this is an error');
+  },
+  headers: {
+  },
+  data: '',
+  async: true
+  });
+
+  var ourResolve = function() {
+    var node = document.createTextNode("Success.");
+    document.getElementById('ajax-div').appendChild(node);
+  };
+
+  var ourReject = function(data) {
+    console.log('this was rejected');
+  };
+
+  ajaxPromise1.then(ourResolve, ourReject);
+  ajaxPromise2.then(ourResolve, ourReject);
+
+  Promise.all([ajaxPromise1, ajaxPromise2]).then(function() {
+    console.log("THIS works");
+  })
+});
+
+
+
+
+
