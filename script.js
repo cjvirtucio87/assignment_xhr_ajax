@@ -53,6 +53,12 @@ var dollarSign = {
 
     xhr.send(options.data);
 
+    var promise = new Promise(resolve, reject) {
+      
+    };
+
+    return promise;
+
   },
 
   get: function(url, data, callback, dataType) {
@@ -61,33 +67,49 @@ var dollarSign = {
                     method: 'GET',
                     success: callback,
                     dataType: dataType });
+  },
+
+  post: function(url, data, callback, dataType) {
+    dollarSign.ajax({url: url,
+                    data: data,
+                    method: 'POST',
+                    success: callback,
+                    dataType: dataType });
   }
 };
 
 
 // regular ajax
-// dollarSign.ajax({
-//   method: 'POST',
-//   url: "http://reqres.in/api/users",
-//   complete: function(xhr) {
-//     console.log(xhr.responseText);
-//   },
-//   success: function() {
-//     console.log('this is successful');
-//   },
-//   error: function() {
-//     console.log('this is an error');
-//   },
-//   headers: {
-//   },
-//   data: '',
-//   async: true
-// });
+dollarSign.ajax({
+  method: 'POST',
+  url: "http://reqres.in/api/posts",
+  complete: function(xhr) {
+    console.log(xhr.responseText);
+  },
+  success: function() {
+    console.log('this is successful');
+  },
+  error: function() {
+    console.log('this is an error');
+  },
+  headers: {
+  },
+  data: 'title=Foo&body=Bar&userId=1',
+  async: true
+});
 
 // get helper
-dollarSign.get(
-  "http://reqres.in/api/users",
-  '',
-  function() {
-    console.log('from the get request');
-  });
+// dollarSign.get(
+//   "http://reqres.in/api/users",
+//   '',
+//   function() {
+//     console.log('from the get request');
+//   });
+
+// get helper
+// dollarSign.post(
+//   "http://reqres.in/api/posts",
+//   'title=Foo&body=Bar&userId=1',
+//   function() {
+//     console.log('from the post request');
+//   });
