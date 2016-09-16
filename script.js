@@ -1,5 +1,6 @@
 var dollarSign = {
   ajax: function(options) {
+    options = options || {};
 
     var xhr = new XMLHttpRequest();
 
@@ -10,7 +11,7 @@ var dollarSign = {
         } else {
           options.error();
         }
-        options.complete();
+        options.complete(xhr);
       }
     };
 
@@ -18,9 +19,28 @@ var dollarSign = {
 
     for (var key in options.headers) {
       xhr.setRequestHeader(key, options.headers[key]);
-    };
+    }
 
     xhr.send(options.data);
 
   },
 };
+
+
+dollarSign.ajax({
+  method: 'GET',
+  url: "http://reqres.in/api/users",
+  complete: function(xhr) {
+    console.log(xhr.responseText);
+  },
+  success: function() {
+    console.log('this is successful');
+  },
+  error: function() {
+    console.log('this is an error');
+  },
+  headers: {
+  },
+  data: '',
+  async: true
+});
