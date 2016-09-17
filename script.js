@@ -128,7 +128,7 @@ var dollarSign = {
 //button ajax
 var button = document.getElementById('ajax-button');
 button.addEventListener('click', function(){
- 
+
  var ajaxPromise1 = dollarSign.ajax({
   method: 'GET',
   url: "http://reqres.in/api/users",
@@ -147,22 +147,22 @@ button.addEventListener('click', function(){
   async: true
   });
 
- var ajaxPromise2 = dollarSign.ajax({
-  method: 'GET',
-  url: "http://reqres.in/api/users",
-  complete: function(xhr) {
-    console.log(xhr.responseText);
-  },
-  success: function() {
-    console.log('this is successful (this happens in the promise)');
-  },
-  error: function() {
-    console.log('this is an error');
-  },
-  headers: {
-  },
-  data: '',
-  async: true
+  var ajaxPromise2 = dollarSign.ajax({
+      method: 'GET',
+      url: "http://reqres.in/api/users",
+      complete: function(xhr) {
+        console.log(xhr.responseText);
+      },
+      success: function() {
+        console.log('this is successful (this happens in the second promise)');
+      },
+      error: function() {
+        console.log('this is an error');
+      },
+      headers: {
+      },
+      data: '',
+      async: true
   });
 
   var ourResolve = function() {
@@ -174,15 +174,20 @@ button.addEventListener('click', function(){
     console.log('this was rejected');
   };
 
+  var resolve2 = function(data) {
+    alert("ALERT from Promise2");
+  };
+
+  var promiseLater = Promise.resolve(3).then(function(data) {
+    setTimeout(function () {
+      console.log("this is from promiseLater" + " " + data + "took 2 seconds");
+    },2000);
+  });
+
   ajaxPromise1.then(ourResolve, ourReject);
-  ajaxPromise2.then(ourResolve, ourReject);
+  ajaxPromise2.then(resolve2, ourReject);
 
-  Promise.all([ajaxPromise1, ajaxPromise2]).then(function() {
+  Promise.all([ajaxPromise1, ajaxPromise2, promiseLater]).then(function() {
     console.log("THIS works");
-  })
+  });
 });
-
-
-
-
-
